@@ -104,7 +104,7 @@ class CommandeAdminController extends Controller
 public function updatePrice(Request $request, $id)
 {
     $request->validate([
-        'price' => 'required|string|max:50',
+        'price' => 'required',
     ]);
 
     $commande = Commande::findOrFail($id);
