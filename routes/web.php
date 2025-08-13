@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CommandeAdminController;
+use App\Http\Controllers\CommandeController;
 use App\Models\TempUser;
 
 
@@ -35,8 +37,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    
+
+
 });
 Route::middleware(['tempUserSession'])->group(function () {
 
@@ -54,7 +56,7 @@ Route::middleware(['tempUserSession'])->group(function () {
             'email' => $tempUser->email,
         ]);
     });
-*/ 
+*/
     Route::get('/', function () {
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
@@ -65,6 +67,19 @@ Route::middleware(['tempUserSession'])->group(function () {
     });
 
 });
+
+Route::get('/test', [CommandeController::class, 'index'])->name('test.index');
+Route::post('/test', [CommandeController::class, 'store'])->name('test.store');
+
+
+Route::get('/commandes', [CommandeAdminController::class, 'index'])->name('commandes.index');
+Route::post('/commandes', [CommandeAdminController::class, 'store'])->name('commandes.store');
+Route::post('/commandes/{id}/markDone', [CommandeAdminController::class, 'markDone'])->name('commandes.markDone');
+Route::post('/commandes/{id}/cancel', [CommandeAdminController::class, 'cancel'])->name('commandes.cancel');
+Route::delete('/commandes/{id}', [CommandeAdminController::class, 'destroy'])->name('commandes.destroy');
+
+Route::post('/commandes/{id}/updateNote', [CommandeAdminController::class, 'updateNote'])->name('commandes.updateNote');
+Route::post('/commandes/{id}/updatePrice', [CommandeAdminController::class, 'updatePrice'])->name('commandes.updatePrice');
 
 
 
