@@ -14,6 +14,6 @@ class ClientMiddleware
             return $next($request);
         }
 
-        return redirect()->route('dashboard.admin');
+        return redirect()->route('admin.commandes.index');
     }
 }

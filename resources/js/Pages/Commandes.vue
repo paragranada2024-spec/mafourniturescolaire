@@ -558,6 +558,9 @@
 <script setup>
 import { ref, computed, nextTick } from 'vue'
 import { usePage, router } from '@inertiajs/vue3'
+import axios from 'axios'
+
+
 import {
   Search, Filter, Phone, MapPin, User, Check, X, ExternalLink,
   FileText, ImageIcon, File, Clock, CheckCircle, XCircle, Edit2, DollarSign,
@@ -601,10 +604,10 @@ const filteredCommands = computed(() => {
     return matchesSearch && matchesStatus
   })
 })
-import LayoutClient from '@/Layout/LayoutClient.vue'
+import LayoutAdmin from '@/Layout/LayoutAdmin.vue' 
 
 defineOptions({
-    layout:LayoutClient
+    layout:LayoutAdmin
 })
 
 const pendingCount = computed(() =>
@@ -628,7 +631,7 @@ const markDone = async (id) => {
   if (command) {
     command.status = 'done'
     try {
-      await router.post(`/commandes/${id}/markDone`)
+      await router.post(`/admin/commandes/${id}/markDone`)
     } catch (error) {
       console.error(error)
     }
@@ -640,7 +643,7 @@ const cancelCommand = async (id) => {
   if (command) {
     command.status = 'cancelled'
     try {
-      await router.post(`/commandes/${id}/cancel`)
+      await router.post(`/admin/commandes/${id}/cancel`)
     } catch (error) {
       console.error(error)
     }
@@ -720,12 +723,13 @@ const startEditingPrice = async (commandId, currentPrice) => {
   if (input) input.focus()
 }
 
-const savePrice = async (commandId) => {
+
+const savePrice = async (commandId) => { 
   try {
     const command = commands.value.find(cmd => cmd.id === commandId)
     if (command) {
       command.price = tempPrice.value
-      await router.post(`/commandes/${commandId}/updatePrice`, {
+      await axios.post(`/admin/commandes/${commandId}/updatePrice`, {
         price: tempPrice.value
       })
     }
@@ -736,6 +740,7 @@ const savePrice = async (commandId) => {
     tempPrice.value = ''
   }
 }
+
 
 const cancelEditingPrice = () => {
   editingPrice.value = null
@@ -755,7 +760,7 @@ const saveNote = async (commandId) => {
     const command = commands.value.find(cmd => cmd.id === commandId)
     if (command) {
       command.note = tempNote.value
-      await router.post(`/commandes/${commandId}/updateNote`, {
+      await axios.post(`/admin/commandes/${commandId}/updateNote`, {
         note: tempNote.value
       })
     }

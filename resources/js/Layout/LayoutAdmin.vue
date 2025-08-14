@@ -83,7 +83,7 @@
 
         <div class="flex items-center space-x-4">
           <!-- Search -->
-          <div class="hidden md:block relative">
+          <!-- <div class="hidden md:block relative">
             <input
               type="text"
               placeholder="Search..."
@@ -92,10 +92,10 @@
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search class="h-5 w-5 text-gray-400" />
             </div>
-          </div>
+          </div> -->
 
           <!-- Notifications -->
-          <div class="relative">
+          <!-- <div class="relative">
             <button
               @click="toggleNotificationsDropdown"
               class="flex items-center p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -117,7 +117,7 @@
                 <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100">📅 Meeting at 3:00 PM</a>
               </div>
             </transition>
-          </div>
+          </div> -->
 
           <!-- User Dropdown -->
           <div class="relative">
@@ -130,20 +130,20 @@
                 <span class="text-white text-sm font-semibold">JD</span>
               </div>
               <div class="hidden md:block text-left">
-                <div class="text-sm font-medium text-gray-900">John Doe</div>
-                <div class="text-xs text-gray-500">john@company.com</div>
+                <div class="text-sm font-medium text-gray-900">Admin</div>
+                <!-- <div class="text-xs text-gray-500">john@company.com</div> -->
               </div>
               <ChevronDown class="w-4 h-4 text-gray-400" />
             </button>
 
             <div
               v-if="userDropdownOpen"
-              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
+              class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
               @click.stop
             >
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
+              <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Billing</a>
-              <div class="border-t border-gray-100"></div>
+              <div class="border-t border-gray-100"></div> -->
               <Link :href="route('logout')" method="post" as="button" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</Link>
             </div>
           </div>
@@ -190,26 +190,28 @@ import {
   UserCog,
   BarChart3
 } from 'lucide-vue-next'
+const isAdmin = computed(() => usePage().props.isAdmin)
 
-
-const page = usePage()
-
-if (page.props.auth.user.role !== 'admin') {
-  router.visit('/dashboard') // redirect client
+router.reload({ only: ['isAdmin'] })
+console.log(isAdmin.value);
+if (!isAdmin.value) {
+  router.visit('/')
 }
+
 const sidebarOpen = ref(false)
 const userDropdownOpen = ref(false)
 const notificationsDropdownOpen = ref(false)
 
 const navigationItems = [
-  { name: 'Admin-Dashboard', href: '/Admin/dashboard', icon: LayoutDashboard },
-  { name: 'Client', href: 'Admin/ClientManagment', icon: Users, badge: 12 },
-  { name: 'Plans', href: '/Admin/plans', icon: CreditCard },
-  { name: 'ai-intents', href: '/Admin/ai-intents', icon: FileText },
-  { name: 'System Logs', href: '/systemlogs', icon: FileText },
-  { name: 'Settings', href: '/client/billing', icon: Settings },
-  { name: 'AdminUsers', href: '/admin/users', icon: UserCog },
-  { name: 'Reports', href: '/client/support', icon: BarChart3 }
+  { name: 'Commandes', href: '/admin/commandes', icon: FileText },
+  // { name: 'Admin-Dashboard', href: '/Admin/dashboard', icon: LayoutDashboard },
+  // { name: 'Client', href: 'Admin/ClientManagment', icon: Users, badge: 12 },
+  // { name: 'Plans', href: '/Admin/plans', icon: CreditCard },
+  // { name: 'ai-intents', href: '/Admin/ai-intents', icon: FileText },
+  // { name: 'System Logs', href: '/systemlogs', icon: FileText },
+  // { name: 'Settings', href: '/client/billing', icon: Settings },
+  // { name: 'AdminUsers', href: '/admin/users', icon: UserCog },
+  // { name: 'Reports', href: '/client/support', icon: BarChart3 }
 ]
 
 const currentUser = ref({
@@ -248,16 +250,17 @@ const isActiveRoute = (href) => {
   return page.url === href
 }
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
+
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
-const user = computed(() => usePage().props.auth.user)
+// const user = computed(() => usePage().props.auth.user)
 
-const userHasRole = (role) => {
-  return user.value?.roles?.some(r => r.name === role)
-}
+// const userHasRole = (role) => {
+//   return user.value?.roles?.some(r => r.name === role)
+// }
 </script>

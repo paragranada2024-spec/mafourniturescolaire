@@ -21,7 +21,7 @@
       <!-- Navigation -->
       <nav class="flex-1 px-4 py-6">
         <Link
-          href="/commandes"
+          href="/admin/commandes"
           class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200"
           :class="isActiveRoute('/commandes') ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'"
           @click="closeMobileSidebar"
@@ -91,7 +91,7 @@ const isActiveRoute = (href) => {
 
 // Redirect to login on logout
 const logout = () => {
-
-  router.post('/logout')
+    router.post(route('logout'))
 }
+
 </script>

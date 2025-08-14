@@ -21,9 +21,9 @@ class RoleMiddleware
         if (!$user->hasRole($role)) {
             
             if ($user->hasRole('client')) {
-                return redirect()->route('dashboard.client');
+                return redirect()->route('admin.commandes.index');
             } elseif ($user->hasRole('admin')) {
-                return redirect()->route('dashboard.admin');
+                return redirect()->route('admin.commandes.index');
             } else {
                 // إذا ما عندوش أدوار معروفة، يمكن توجهه لـ login أو صفحة خطأ عامة
                 return redirect()->route('login');

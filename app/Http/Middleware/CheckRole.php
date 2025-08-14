@@ -13,14 +13,14 @@ class CheckRole
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if (!Auth::check()) {
-            return redirect('/dashboard');
+            return redirect('/admin/commandes');
         }
 
         /** @var User $user */
         $user = Auth::user();
 
         if (!$user->hasRole($role)) {
-            return redirect('/dashboard');
+            return redirect('/admin/commandes');
         }
 
         return $next($request);

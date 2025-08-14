@@ -40,9 +40,9 @@ class LoginController extends Controller
             $user->load('roles');
 
             if ($user->hasRole('admin')) {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->intended('/admin/commandes');
             } elseif ($user->hasRole('client')) {
-                return redirect()->intended('/client/dashboard');
+                return redirect()->intended('/admin/commandes');
             } else {
                 Auth::logout();
                 return redirect('/login');

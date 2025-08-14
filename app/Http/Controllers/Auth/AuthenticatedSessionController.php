@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         // Redirect all authenticated users to a single dashboard route.
         // The Vue component will handle displaying the correct layout.
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('admin.commandes.index', absolute: false));
     }
 
     /**

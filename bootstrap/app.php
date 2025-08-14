@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CleanupTempUserMiddleware;
 use App\Http\Middleware\ClientMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -28,7 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'client' => ClientMiddleware::class,
             'tempUserSession' => TempUserSessionMiddleware::class,
-            'cleanupTempUser'=>CleanupTempUserMiddleware::class,
+            // 'cleanupTempUser'=>CleanupTempUserMiddleware::class,
+            'auth2' => Authenticate::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

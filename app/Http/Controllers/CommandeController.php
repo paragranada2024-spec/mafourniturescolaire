@@ -13,7 +13,7 @@ class CommandeController extends Controller
     {
         $commandes = Commande::with('items')->get();
 
-        return Inertia::render('Test', [
+        return Inertia::render('CommandePage', [
             'commandes' => $commandes,
         ]);
     }
