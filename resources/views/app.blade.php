@@ -45,7 +45,7 @@
 
   {{-- Vite: utilise tes assets compilés (évite CDN Tailwind/Flowbite) --}}
   @routes
-  @vite(['resources/css/app.css','resources/js/app.js'])
+  @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
   @inertiaHead
 
   {{-- Favicons --}}
