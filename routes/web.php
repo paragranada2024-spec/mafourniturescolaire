@@ -29,9 +29,9 @@ Route::middleware(['auth2', 'admin'])->group(function () {
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->middleware('admin')->name('dashboard.admin');
 
     // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/commandes', [CommandeAdminController::class, 'index'])->middleware('admin')->name('commandes.index');

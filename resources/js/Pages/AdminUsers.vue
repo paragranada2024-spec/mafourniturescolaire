@@ -19,7 +19,7 @@
       <!-- Content -->
       <div class=" sm: py-6 space-y-6">
         <!-- Filters -->
-        <UserFilters
+        <!-- <UserFilters
           :search="filters.search"
           :role="filters.role"
           :status="filters.status"
@@ -27,35 +27,35 @@
           @update:role="val => filters.role = val"
           @update:status="val => filters.status = val"
           @reset="resetFilters"
-        />
-
+        /> -->
+<!-- 
               <UserTable
           :users="paginatedUsers"
           :loading="loading"
           @edit="handleEdit"
           @delete="handleDelete"
           @toggle-status="handleToggleStatus"
-        />
+        /> -->
 
 
         <!-- Modals -->
-        <UserModal
+        <!-- <UserModal
           :show="showAddModal"
           :user="selectedUser"
           :mode="modalMode"
           @save="handleSave"
           @close="closeModal"
-        />
+        /> -->
 
-        <ConfirmModal
+        <!-- <ConfirmModal
           :show="showDeleteModal"
           title="Delete Admin User"
           :message="`Are you sure you want to delete ${userToDelete?.name}? This action cannot be undone.`"
           @confirm="confirmDelete"
           @cancel="showDeleteModal = false"
-        />
+        /> -->
         <!-- Pagination -->
-          <Pagination
+          <!-- <Pagination
             :current-page="currentPage"
             :total-pages="totalPages"
             :total-items="filteredUsers.length"
@@ -63,7 +63,7 @@
             @previous="goToPreviousPage"
             @next="goToNextPage"
             @go-to-page="goToPage"
-          />
+          /> -->
 
       </div>
     </div>
@@ -74,11 +74,11 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { Plus } from 'lucide-vue-next'
 import LayoutAdmin from '@/Layout/LayoutAdmin.vue'
-import UserFilters from '@/components/admin/UserFilters.vue'
-import UserTable from '@/components/admin/UserTable.vue'
-import UserModal from '@/components/admin/UserModal.vue'
-import ConfirmModal from '@/components/common/ConfirmModal.vue'
-import Pagination from '@/components/layout/Pagination.vue'
+// import UserFilters from '@/components/admin/UserFilters.vue'
+// import UserTable from '@/components/admin/UserTable.vue'
+// import UserModal from '@/components/admin/UserModal.vue'
+// import ConfirmModal from '@/components/common/ConfirmModal.vue'
+// import Pagination from '@/components/layout/Pagination.vue'
 
 
 // State

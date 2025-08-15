@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import LayoutAdmin from '@Layout/LayoutAdmin.vue';
-import LayoutClient from '@Layout/LayoutClient.vue';
+import LayoutAdmin from '@/Layout/LayoutAdmin.vue';
+import LayoutClient from '@/Layout/LayoutClient.vue';
 
 const page = usePage();
 
