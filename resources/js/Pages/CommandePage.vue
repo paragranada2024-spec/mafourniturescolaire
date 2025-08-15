@@ -4,47 +4,43 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <!-- Titre et sous-titre -->
       <div class="text-center mb-8 sm:mb-12 pt-6">
-        <h1 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+        <h1 class="text-xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
           Nous préparons votre liste scolaire
         </h1>
-        <p class="text-sm sm:text-lg text-gray-600">
-          Laissez notre intelligence artificielle préparer votre liste scolaire ;)
+        <p class="text-sm text-gray-600">
+          Liste scolaire préparée avec soin et livrée chez vous, au prix le plus bas.
         </p>
       </div>
 
       <!-- Les 3 étapes -->
       <div class="relative mb-10 md:mb-12">
         <!-- Mobile: carrousel horizontal avec snap -->
-        <div class="flex md:hidden gap-3 overflow-x-auto snap-x snap-mandatory px-1 -mx-1" aria-label="Étapes">
-          <StepCards number="1" title="J'importe ma liste scolaire"
-            desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg"
-            class="snap-start" />
-          <StepCards number="2" title="La magie opère"
-            desc="L'IA recherche et ajoute dans mon panier toutes les fournitures présentes dans ma liste."
-            img="/storage/svg2.svg" class="snap-start" />
-          <StepCards number="3" title="Je récupère mes fournitures"
-            desc="Je peux me faire livrer en 24H ou retirer mes fournitures en magasin dès 2H." img="/storage/svg3.svg"
-            class="snap-start" />
+        <div class="flex flex-wrap md:hidden gap-3 " aria-label="Étapes">
+          <StepCards number="1" title="J'importe mes listes de fournitures."
+            desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg" class="" />
+          <StepCards number="2" title="Validation rapide"
+            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/svg2.svg"
+            class="" />
+          <StepCards number="3" title="Livraison rapide" desc="Vos fournitures arrivent chez vous dans les 48h."
+            img="/storage/svg3.svg" class="" />
         </div>
 
         <!-- Desktop: grille -->
         <div class="hidden md:grid md:grid-cols-3 md:gap-6">
-          <StepCards number="1" title="J'importe ma liste scolaire"
-            desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg" />
-          <StepCards number="2" title="La magie opère"
-            desc="L'IA recherche et ajoute dans mon panier toutes les fournitures présentes dans ma liste."
-            img="/storage/svg2.svg" />
-          <StepCards number="3" title="Je récupère mes fournitures"
-            desc="Je peux me faire livrer en 24H ou retirer mes fournitures en magasin dès 2H."
-            img="/storage/svg3.svg" />
+          <StepCards number="1" title="J'importe mes listes de fournitures."
+            desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg" class="" />
+          <StepCards number="2" title="Validation rapide"
+            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/svg2.svg"
+            class="" />
+          <StepCards number="3" title="Livraison rapide" desc="Vos fournitures arrivent chez vous dans les 48h."
+            img="/storage/svg3.svg" class="" />
         </div>
       </div>
 
       <!-- Message d'information -->
       <div class="text-center mb-6 sm:mb-8 px-2">
-        <p class="text-xs sm:text-sm text-gray-600">
-          Pas d'inquiétude, si les produits sélectionnés par l'IA ne me conviennent pas, je peux toujours en choisir
-          d'autres.
+        <p class="text-xs sm:text-sm text-red-600" style="font-style: italic;">
+          Les manuels scolaires ne sont pas pris en charge, uniquement les fournitures.
         </p>
       </div>
 
@@ -91,39 +87,44 @@
           </div>
         </div>
       </div>
-      <!-- Section Pack Options -->
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+      <!-- Section Pack Options (compact & clean) -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
         <li v-for="option in options" :key="option.value">
-          <label :for="option.value" @click="changeDelivery(option.value)"
-            class="flex flex-col items-center p-5 border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-md"
-            :class="{
-              'border-pink-600 bg-pink-50 shadow-sm': form.pack === option.value,
-              'border-gray-200 bg-white': form.pack !== option.value
-            }">
-            <!-- Illustration -->
-            <div class="w-12 h-12 flex items-center justify-center rounded-full mb-3"
-              :class="form.pack === option.value ? 'bg-pink-100 text-pink-600' : 'bg-gray-100 text-gray-500'">
+          <!-- Radio (hidden) -->
+          <input class="peer sr-only" type="radio" :id="`pack-${option.value}`" :value="option.value"
+            v-model="form.pack" @change="changeDelivery(option.value)" />
+
+          <!-- Card -->
+          <label :for="`pack-${option.value}`" class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors
+             border-gray-200 hover:border-gray-300
+             peer-checked:border-pink-500 peer-checked:bg-pink-50">
+            <!-- Icon -->
+            <span class="flex-none w-8 h-8 rounded-full flex items-center justify-center
+               bg-gray-100 text-gray-500
+               peer-checked:bg-pink-100 peer-checked:text-pink-600">
               <svg v-if="option.value === 'plus'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" class="w-7 h-7">
+                stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
               <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="w-7 h-7">
+                class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
+            </span>
+
+            <!-- Text -->
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-gray-900">
+                {{ option.label }}
+              </p>
+              <p class="text-xs text-gray-500 leading-snug">
+                {{ option.desc }}
+              </p>
             </div>
-
-            <!-- Texte -->
-            <p class="font-semibold text-lg text-gray-900">{{ option.label }}</p>
-            <p class="text-xs text-gray-500 mt-1 text-center max-w-[200px]">
-              {{ option.desc }}
-            </p>
-
-            <!-- Radio caché -->
-            <input type="radio" :id="option.value" :value="option.value" v-model="form.pack" class="hidden" />
           </label>
         </li>
       </ul>
+
 
       <!-- <ul class="grid md:grid-cols-2 gap-4">
         <li v-for="option in options" :key="option.value">
@@ -203,7 +204,7 @@ const villes = [
   "Khenifra", "Khouribga", "Ksar El Kebir", "Laâyoune", "Larache", "Marrakech", "Martil", "Meknès",
   "Midelt", "Mohammédia", "Mohammedia", "Nador", "Ouarzazate", "Oujda", "Oulad Teima", "Rabat",
   "Safi", "Salé", "Sefrou", "Settat", "Sidi Bennour", "Sidi Ifni", "Sidi Kacem", "Sidi Slimane",
-  "Skhirat", "Smara", "Souk Sebt", "Tahala", "Tahla", "Tan-Tan", "Tanger", "Taourirt", "Taroudant",
+  "Skhirat", "Smara", "Souk Sebt", "Tahala", "Tahla", "Tan-Tan", "Tanger", "Tetouan", "Taourirt", "Taroudant",
   "Taza", "Temara", "Tiflet", "Tinghir", "Tiznit", "Témara", "Youssoufia", "Zagora"
 ]
 const objectUrls = new Map()
@@ -318,25 +319,32 @@ const formatFileSize = (bytes) => {
     word-break: break-word;
   }
 }
+
 .background {
   background-image: url('/storage/Design sans titre.jpg');
-  background-size: contain; /* ما يقطعش الصورة */
-  background-position: top center; /* يبقيها من الفوق */
+  background-size: contain;
+  /* ما يقطعش الصورة */
+  background-position: top center;
+  /* يبقيها من الفوق */
   background-repeat: no-repeat;
-  
+
   width: 100%;
   min-height: 100vh;
-  background-color: #f8f8f8; /* لون فراغ تحت/جنب الصورة */
+  background-color: #f8f8f8;
+  /* لون فراغ تحت/جنب الصورة */
 }
 
 .background1 {
   background-image: url('/storage/Design sans titre (1).jpg');
-  background-size: cover; /* ما يقطعش الصورة */
-  background-position: top center; /* يبقيها من الفوق */
+  background-size: cover;
+  /* ما يقطعش الصورة */
+  background-position: top center;
+  /* يبقيها من الفوق */
   background-repeat: no-repeat;
-  
+
   width: 100%;
   min-height: 100vh;
-  background-color: #f8f8f8; /* لون فراغ تحت/جنب الصورة */
+  background-color: #f8f8f8;
+  /* لون فراغ تحت/جنب الصورة */
 }
 </style>
