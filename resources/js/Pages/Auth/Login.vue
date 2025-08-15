@@ -172,7 +172,7 @@ const handleGoogleSignIn = () => {
                         </div>
         
                         <!-- OAuth Divider -->
-                        <div class="mt-6">
+                        <!-- <div class="mt-6">
                             <div class="relative">
                                 <div class="absolute inset-0 flex items-center">
                                     <div class="w-full border-t border-gray-300 dark:border-gray-600" />
@@ -182,7 +182,6 @@ const handleGoogleSignIn = () => {
                                 </div>
                             </div>
         
-                            <!-- Google OAuth Button -->
                             <div class="mt-6">
                                 <button
                                     type="button"
@@ -198,7 +197,7 @@ const handleGoogleSignIn = () => {
                                     Continue with Google
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
         
                     <!-- Sign Up Link -->
