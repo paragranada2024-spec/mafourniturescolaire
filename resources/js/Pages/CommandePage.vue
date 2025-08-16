@@ -19,7 +19,7 @@
           <StepCards number="1" title="J'importe mes listes de fournitures."
             desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg" class="" />
           <StepCards number="2" title="Validation rapide"
-            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/svg2.svg"
+            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/meilleur-prix-garantie.png"
             class="" />
           <StepCards number="3" title="Livraison rapide" desc="Vos fournitures arrivent chez vous dans les 48h."
             img="/storage/svg3.svg" class="" />
@@ -30,7 +30,7 @@
           <StepCards number="1" title="J'importe mes listes de fournitures."
             desc="Je peux renseigner les options et les préférences de mon enfant" img="/storage/svg1.svg" class="" />
           <StepCards number="2" title="Validation rapide"
-            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/svg2.svg"
+            desc="Nous vous contactons pour vous communiquer le prix et confirmer votre liste." img="/storage/meilleur-prix-garantie.png"
             class="" />
           <StepCards number="3" title="Livraison rapide" desc="Vos fournitures arrivent chez vous dans les 48h."
             img="/storage/svg3.svg" class="" />
