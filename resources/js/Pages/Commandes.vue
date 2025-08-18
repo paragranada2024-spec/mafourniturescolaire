@@ -77,21 +77,13 @@
         <div class="flex flex-col lg:flex-row gap-6">
           <div class="relative flex-1">
             <Search class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-            <input
-              v-model="searchTerm"
-              type="text"
-              placeholder="Search by name, city, or phone..."
-              class="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all duration-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 font-medium"
-            />
+            <input v-model="searchTerm" type="text" placeholder="Search by name, city, or phone..."
+              class="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all duration-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 font-medium" />
           </div>
           <div class="flex gap-3 flex-wrap">
-            <button
-              v-for="filter in statusFilters"
-              :key="filter.value"
-              @click="statusFilter = filter.value"
+            <button v-for="filter in statusFilters" :key="filter.value" @click="statusFilter = filter.value"
               class="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center gap-2"
-              :class="statusFilter === filter.value ? 'bg-slate-800 text-white shadow-lg' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'"
-            >
+              :class="statusFilter === filter.value ? 'bg-slate-800 text-white shadow-lg' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'">
               <Filter v-if="filter.value === 'all'" class="w-4 h-4" />
               <Clock v-else-if="filter.value === 'pending'" class="w-4 h-4" />
               <CheckCircle v-else-if="filter.value === 'done'" class="w-4 h-4" />
@@ -110,22 +102,29 @@
             <table class="w-full">
               <thead class="bg-slate-50/80 border-b border-slate-200">
                 <tr>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Customer</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Contact</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Price</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Pack Type</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Files</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Notes</th>
-                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Status</th>
-                  <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">Actions</th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Customer
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Contact
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Price
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Pack Type
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Files
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Notes
+                  </th>
+                  <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Status
+                  </th>
+                  <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">Actions
+                  </th>
+                  <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                  </th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100">
-                <tr
-                  v-for="command in filteredCommands"
-                  :key="command.id"
-                  class="hover:bg-slate-50/50 transition-all duration-200"
-                >
+                <tr v-for="command in filteredCommands" :key="command.id"
+                  class="hover:bg-slate-50/50 transition-all duration-200">
                   <td class="px-6 py-4">
                     <div class="flex items-center">
 
@@ -152,34 +151,22 @@
                         <span class="font-semibold text-slate-800">
                           {{ command.price ? `$${command.price}` : 'Not set' }}
                         </span>
-                        <button
-                          @click="startEditingPrice(command.id, command.price)"
-                          class="p-1.5 text-slate-400 hover:text-slate-600 transition-colors rounded-lg hover:bg-slate-100"
-                        >
+                        <button @click="startEditingPrice(command.id, command.price)"
+                          class="p-1.5 text-slate-400 hover:text-slate-600 transition-colors rounded-lg hover:bg-slate-100">
                           <Edit2 class="w-4 h-4" />
                         </button>
                       </div>
                       <div v-else class="flex items-center gap-2">
-                        <input
-                          v-model="tempPrice"
-                          @keyup.enter="savePrice(command.id)"
-                          @keyup.escape="cancelEditingPrice"
-                          type="number"
-                          step="0.01"
-                          placeholder="0.00"
+                        <input v-model="tempPrice" @keyup.enter="savePrice(command.id)"
+                          @keyup.escape="cancelEditingPrice" type="number" step="0.01" placeholder="0.00"
                           class="w-24 px-2 py-1 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
-                          ref="priceInput"
-                        />
-                        <button
-                          @click="savePrice(command.id)"
-                          class="p-1.5 text-emerald-600 hover:text-emerald-700 transition-colors rounded-lg bg-emerald-50"
-                        >
+                          ref="priceInput" />
+                        <button @click="savePrice(command.id)"
+                          class="p-1.5 text-emerald-600 hover:text-emerald-700 transition-colors rounded-lg bg-emerald-50">
                           <Check class="w-4 h-4" />
                         </button>
-                        <button
-                          @click="cancelEditingPrice"
-                          class="p-1.5 text-red-600 hover:text-red-700 transition-colors rounded-lg bg-red-50"
-                        >
+                        <button @click="cancelEditingPrice"
+                          class="p-1.5 text-red-600 hover:text-red-700 transition-colors rounded-lg bg-red-50">
                           <X class="w-4 h-4" />
                         </button>
                       </div>
@@ -190,7 +177,7 @@
                     <div class="flex items-center gap-2">
                       <Package class="w-4 h-4 text-slate-400" />
                       <span class="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium"
-                            :class="command.pack === 'plus' ? 'bg-indigo-100 text-indigo-800' : 'bg-emerald-100 text-emerald-800'">
+                        :class="command.pack === 'plus' ? 'bg-indigo-100 text-indigo-800' : 'bg-emerald-100 text-emerald-800'">
                         {{ getPackLabel(command.pack) }}
                       </span>
                     </div>
@@ -199,22 +186,16 @@
                     <!-- Enhanced file handling with image lightbox and download links -->
                     <div class="flex items-center gap-3">
                       <div v-if="command.items && command.items.length > 0" class="flex items-center gap-2">
-                        <button
-                          @click="openLightbox(getImageFiles(command.items), 0)"
+                        <button @click="openLightbox(getImageFiles(command.items), 0)"
                           v-if="getImageFiles(command.items).length > 0"
-                          class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-600 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-all duration-200"
-                        >
+                          class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-600 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-all duration-200">
                           <ImageIcon class="w-4 h-4" />
                           {{ getImageFiles(command.items).length }}
                         </button>
                         <div v-if="getNonImageFiles(command.items).length > 0" class="flex flex-wrap gap-1">
-                          <a
-                            v-for="item in getNonImageFiles(command.items)"
-                            :key="item.id"
-                            :href="`/storage/${item.image}`"
-                            target="_blank"
-                            class="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-medium hover:bg-blue-200 transition-all duration-200"
-                          >
+                          <a v-for="item in getNonImageFiles(command.items)" :key="item.id"
+                            :href="`/storage/${item.image}`" target="_blank"
+                            class="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-medium hover:bg-blue-200 transition-all duration-200">
                             <component :is="getFileIcon(item.image)" class="w-3 h-3" />
                             {{ getFileType(item.image) }}
                             <ExternalLink class="w-3 h-3" />
@@ -232,34 +213,23 @@
                         <p class="text-sm text-slate-600 max-w-xs truncate">
                           {{ command.note || 'No notes' }}
                         </p>
-                        <button
-                          @click="startEditingNote(command.id, command.note)"
-                          class="p-1.5 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0 rounded-lg hover:bg-slate-100"
-                        >
+                        <button @click="startEditingNote(command.id, command.note)"
+                          class="p-1.5 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0 rounded-lg hover:bg-slate-100">
                           <Edit2 class="w-4 h-4" />
                         </button>
                       </div>
                       <div v-else class="flex items-start gap-2 flex-1">
-                        <textarea
-                          v-model="tempNote"
-                          @keyup.ctrl.enter="saveNote(command.id)"
-                          @keyup.escape="cancelEditingNote"
-                          placeholder="Add a note..."
-                          rows="2"
+                        <textarea v-model="tempNote" @keyup.ctrl.enter="saveNote(command.id)"
+                          @keyup.escape="cancelEditingNote" placeholder="Add a note..." rows="2"
                           class="flex-1 px-2 py-1 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400 resize-none"
-                          ref="noteInput"
-                        ></textarea>
+                          ref="noteInput"></textarea>
                         <div class="flex flex-col gap-1">
-                          <button
-                            @click="saveNote(command.id)"
-                            class="p-1.5 text-emerald-600 hover:text-emerald-700 transition-colors rounded-lg bg-emerald-50"
-                          >
+                          <button @click="saveNote(command.id)"
+                            class="p-1.5 text-emerald-600 hover:text-emerald-700 transition-colors rounded-lg bg-emerald-50">
                             <Check class="w-4 h-4" />
                           </button>
-                          <button
-                            @click="cancelEditingNote"
-                            class="p-1.5 text-red-600 hover:text-red-700 transition-colors rounded-lg bg-red-50"
-                          >
+                          <button @click="cancelEditingNote"
+                            class="p-1.5 text-red-600 hover:text-red-700 transition-colors rounded-lg bg-red-50">
                             <X class="w-4 h-4" />
                           </button>
                         </div>
@@ -268,27 +238,28 @@
                   </td>
                   <td class="px-6 py-4">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
-                          :class="getStatusClasses(command.status)">
+                      :class="getStatusClasses(command.status)">
                       {{ getStatusLabel(command.status) }}
                     </span>
                   </td>
                   <td class="px-6 py-4">
                     <div class="flex items-center justify-center gap-2" v-if="command.status === 'pending'">
-                      <button
-                        @click="markDone(command.id)"
-                        class="inline-flex items-center px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200"
-                      >
+                      <button @click="markDone(command.id)"
+                        class="inline-flex items-center px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200">
                         <Check class="w-4 h-4 mr-1" />
                         Complete
                       </button>
-                      <button
-                        @click="cancelCommand(command.id)"
-                        class="inline-flex items-center px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-all duration-200"
-                      >
+                      <button @click="cancelCommand(command.id)"
+                        class="inline-flex items-center px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-all duration-200">
                         <X class="w-4 h-4 mr-1" />
                         Cancel
                       </button>
                     </div>
+                  </td>
+                  <td class="p-2 text-center space-x-2">
+                    <button @click="confirmDelete(command)" class="text-red-500 ">
+                      <Trash2 class="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -298,18 +269,16 @@
 
         <!-- Added mobile responsive cards view -->
         <div class="lg:hidden p-6 space-y-6">
-          <div
-            v-for="command in filteredCommands"
-            :key="command.id"
-            class="bg-slate-50/50 border border-slate-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 relative"
-          >
+          <div v-for="command in filteredCommands" :key="command.id"
+            class="bg-slate-50/50 border border-slate-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 relative">
             <div class="flex justify-between items-start mb-6">
               <div class="flex items-center">
 
                 <div>
                   <h3 class="font-semibold text-slate-800 text-lg">{{ command.name }}</h3>
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium absolute top-4 right-3"
-                        :class="getStatusClasses(command.status)">
+                  <span
+                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium absolute top-4 right-3"
+                    :class="getStatusClasses(command.status)">
                     {{ getStatusLabel(command.status) }}
                   </span>
                 </div>
@@ -339,36 +308,27 @@
                   <span class="font-semibold text-slate-800">
                     {{ command.price ? `$${command.price}` : 'Price not set' }}
                   </span>
-                  <button
-                    @click="startEditingPrice(command.id, command.price)"
-                    class="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white rounded-lg border border-slate-200"
-                  >
+                  <button @click="startEditingPrice(command.id, command.price)"
+                    class="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white rounded-lg border border-slate-200">
                     <Edit2 class="w-4 h-4" />
                   </button>
                 </div>
                 <div v-else class="flex items-center gap-2 flex-1">
-                  <input
-                    v-model="tempPrice"
-                    @keyup.enter="savePrice(command.id)"
-                    @keyup.escape="cancelEditingPrice"
-                    type="number"
-                    step="0.01"
-                    placeholder="0.00"
-                    class="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
-                  />
-                  <button
-                    @click="savePrice(command.id)"
-                    class="p-2 text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 rounded-lg"
-                  >
+                  <input v-model="tempPrice" @keyup.enter="savePrice(command.id)" @keyup.escape="cancelEditingPrice"
+                    type="number" step="0.01" placeholder="0.00"
+                    class="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400" />
+                  <button @click="savePrice(command.id)"
+                    class="p-2 text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 rounded-lg">
                     <Check class="w-4 h-4" />
                   </button>
-                  <button
-                    @click="cancelEditingPrice"
-                    class="p-2 text-red-600 hover:text-red-700 transition-colors bg-red-50 rounded-lg"
-                  >
+                  <button @click="cancelEditingPrice"
+                    class="p-2 text-red-600 hover:text-red-700 transition-colors bg-red-50 rounded-lg">
                     <X class="w-4 h-4" />
                   </button>
                 </div>
+                <button @click="confirmDelete(command)" class="text-red-500 ">
+                  <Trash2 class="w-4 h-4" />
+                </button>
               </div>
 
               <!-- Mobile Pack Type Editing -->
@@ -377,7 +337,7 @@
                   <Package class="w-4 h-4 text-indigo-600" />
                 </div>
                 <span class="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium"
-                      :class="command.pack === 'plus' ? 'bg-indigo-100 text-indigo-800' : 'bg-emerald-100 text-emerald-800'">
+                  :class="command.pack === 'plus' ? 'bg-indigo-100 text-indigo-800' : 'bg-emerald-100 text-emerald-800'">
                   {{ getPackLabel(command.pack) }}
                 </span>
               </div>
@@ -391,36 +351,26 @@
                   Notes:
                 </h4>
                 <div v-if="editingNote !== command.id" class="flex items-start gap-3">
-                  <p class="text-sm text-slate-700 flex-1 bg-white rounded-lg p-3 min-h-[2.5rem] border border-slate-200">
+                  <p
+                    class="text-sm text-slate-700 flex-1 bg-white rounded-lg p-3 min-h-[2.5rem] border border-slate-200">
                     {{ command.note || 'No notes added yet' }}
                   </p>
-                  <button
-                    @click="startEditingNote(command.id, command.note)"
-                    class="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white rounded-lg border border-slate-200"
-                  >
+                  <button @click="startEditingNote(command.id, command.note)"
+                    class="p-2 text-slate-400 hover:text-slate-600 transition-colors bg-white rounded-lg border border-slate-200">
                     <Edit2 class="w-4 h-4" />
                   </button>
                 </div>
                 <div v-else class="flex items-start gap-3">
-                  <textarea
-                    v-model="tempNote"
-                    @keyup.ctrl.enter="saveNote(command.id)"
-                    @keyup.escape="cancelEditingNote"
-                    placeholder="Add a note..."
-                    rows="3"
-                    class="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400 resize-none"
-                  ></textarea>
+                  <textarea v-model="tempNote" @keyup.ctrl.enter="saveNote(command.id)"
+                    @keyup.escape="cancelEditingNote" placeholder="Add a note..." rows="3"
+                    class="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400 resize-none"></textarea>
                   <div class="flex flex-col gap-2">
-                    <button
-                      @click="saveNote(command.id)"
-                      class="p-2 text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 rounded-lg"
-                    >
+                    <button @click="saveNote(command.id)"
+                      class="p-2 text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 rounded-lg">
                       <Check class="w-4 h-4" />
                     </button>
-                    <button
-                      @click="cancelEditingNote"
-                      class="p-2 text-red-600 hover:text-red-700 transition-colors bg-red-50 rounded-lg"
-                    >
+                    <button @click="cancelEditingNote"
+                      class="p-2 text-red-600 hover:text-red-700 transition-colors bg-red-50 rounded-lg">
                       <X class="w-4 h-4" />
                     </button>
                   </div>
@@ -436,21 +386,16 @@
                   Files:
                 </h4>
                 <div v-if="command.items && command.items.length > 0" class="flex flex-wrap gap-2">
-                  <button
-                    v-if="getImageFiles(command.items).length > 0"
+                  <button v-if="getImageFiles(command.items).length > 0"
                     @click="openLightbox(getImageFiles(command.items), 0)"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-all duration-200"
-                  >
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-all duration-200">
                     <ImageIcon class="w-4 h-4" />
-                    {{ getImageFiles(command.items).length }} image{{ getImageFiles(command.items).length !== 1 ? 's' : '' }}
+                    {{ getImageFiles(command.items).length }} image{{ getImageFiles(command.items).length !== 1 ? 's' :
+                      '' }}
                   </button>
-                  <a
-                    v-for="item in getNonImageFiles(command.items)"
-                    :key="item.id"
-                    :href="`/storage/${item.image}`"
+                  <a v-for="item in getNonImageFiles(command.items)" :key="item.id" :href="`/storage/${item.image}`"
                     target="_blank"
-                    class="inline-flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-all duration-200"
-                  >
+                    class="inline-flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-all duration-200">
                     <component :is="getFileIcon(item.image)" class="w-4 h-4" />
                     {{ getFileType(item.image) }}
                     <ExternalLink class="w-4 h-4" />
@@ -463,17 +408,13 @@
 
               <!-- Mobile Actions -->
               <div v-if="command.status === 'pending'" class="flex gap-3">
-                <button
-                  @click="markDone(command.id)"
-                  class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200"
-                >
+                <button @click="markDone(command.id)"
+                  class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200">
                   <Check class="w-4 h-4 mr-2" />
                   Complete
                 </button>
-                <button
-                  @click="cancelCommand(command.id)"
-                  class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-all duration-200"
-                >
+                <button @click="cancelCommand(command.id)"
+                  class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-all duration-200">
                   <X class="w-4 h-4 mr-2" />
                   Cancel
                 </button>
@@ -498,43 +439,31 @@
     </div>
 
     <!-- Added image lightbox modal -->
-    <div
-      v-if="lightboxOpen"
-      @click="closeLightbox"
-      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-    >
+    <div v-if="lightboxOpen" @click="closeLightbox"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div class="relative max-w-4xl max-h-full">
-        <button
-          @click="closeLightbox"
-          class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10 p-2 rounded-full bg-black/50 hover:bg-black/70"
-        >
+        <button @click="closeLightbox"
+          class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10 p-2 rounded-full bg-black/50 hover:bg-black/70">
           <X class="w-6 h-6" />
         </button>
 
         <div class="relative">
           <div class="flex justify-center">
-            <img
-              :src="`/storage/${lightboxImages[currentImageIndex]?.image}`"
+            <img :src="`/storage/${lightboxImages[currentImageIndex]?.image}`"
               :alt="lightboxImages[currentImageIndex]?.image"
-              class=" max-h-[350px] object-contain rounded-xl shadow-2xl"
-              @click.stop
-            />
+              class=" max-h-[350px] object-contain rounded-xl shadow-2xl" @click.stop />
           </div>
 
           <div v-if="lightboxImages.length > 1" class="hidden md:block">
-            <button
-              @click.stop="previousImage"
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-all duration-200"
-            >
+            <button @click.stop="previousImage"
+              class="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-all duration-200">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
               </svg>
             </button>
 
-            <button
-              @click.stop="nextImage"
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-all duration-200"
-            >
+            <button @click.stop="nextImage"
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-all duration-200">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
@@ -542,13 +471,27 @@
           </div>
         </div>
 
-        <div v-if="lightboxImages.length > 1" class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
+        <div v-if="lightboxImages.length > 1"
+          class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-center">
           <div class="text-white text-sm font-medium mb-2">
             {{ currentImageIndex + 1 }} / {{ lightboxImages.length }}
           </div>
           <div class="text-white/70 text-xs">
             {{ lightboxImages[currentImageIndex]?.image }}
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal suppression -->
+    <div v-if="showDelete" class="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow w-full max-w-sm">
+        <h2 class="text-lg font-semibold mb-4">Confirmation</h2>
+        <p>Voulez-vous vraiment supprimer la commande <strong>#{{ toDelete.id }}</strong> ?</p>
+        <div class="mt-6 flex justify-end gap-3">
+          <button @click="showDelete = false" class="px-4 py-2 border rounded">Annuler</button>
+          <button @click="deleteOrder"
+            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Supprimer</button>
         </div>
       </div>
     </div>
@@ -564,7 +507,8 @@ import axios from 'axios'
 import {
   Search, Filter, Phone, MapPin, User, Check, X, ExternalLink,
   FileText, ImageIcon, File, Clock, CheckCircle, XCircle, Edit2, DollarSign,
-  Package, Star
+  Package, Star,
+  Trash2
 } from 'lucide-vue-next'
 
 
@@ -580,6 +524,8 @@ const editingPrice = ref(null)
 const editingNote = ref(null)
 const tempPrice = ref('')
 const tempNote = ref('')
+const showDelete = ref(false)
+const toDelete = ref(null)
 
 const lightboxOpen = ref(false)
 const lightboxImages = ref([])
@@ -604,10 +550,10 @@ const filteredCommands = computed(() => {
     return matchesSearch && matchesStatus
   })
 })
-import LayoutAdmin from '@/Layout/LayoutAdmin.vue' 
+import LayoutAdmin from '@/Layout/LayoutAdmin.vue'
 
 defineOptions({
-    layout:LayoutAdmin
+  layout: LayoutAdmin
 })
 
 const pendingCount = computed(() =>
@@ -617,6 +563,13 @@ const pendingCount = computed(() =>
 const completedCount = computed(() =>
   commands.value.filter(cmd => cmd.status === 'done').length
 )
+
+async function deleteOrder() {
+  // router.delete(route('admin.commandes.destroy', toDelete.value.id), {
+  //   onSuccess: () => closeDelete(),
+  // })
+  await axios.delete(route('admin.commandes.destroy', toDelete.value.id)).then(() => closeDelete())
+}
 
 const cancelledCount = computed(() =>
   commands.value.filter(cmd => cmd.status === 'cancelled').length
@@ -637,7 +590,16 @@ const markDone = async (id) => {
     }
   }
 }
+function confirmDelete(order) {
+  toDelete.value = order
+  showDelete.value = true
+}
 
+function closeDelete() {
+  toast.success('Commande supprimée avec succès !')
+  showDelete.value = false
+  toDelete.value = null
+}
 const cancelCommand = async (id) => {
   const command = commands.value.find(cmd => cmd.id === id)
   if (command) {
@@ -724,7 +686,7 @@ const startEditingPrice = async (commandId, currentPrice) => {
 }
 
 
-const savePrice = async (commandId) => { 
+const savePrice = async (commandId) => {
   try {
     const command = commands.value.find(cmd => cmd.id === commandId)
     if (command) {
