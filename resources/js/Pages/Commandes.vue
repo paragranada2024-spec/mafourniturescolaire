@@ -116,10 +116,10 @@
                   </th>
                   <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">Status
                   </th>
-                  <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">Actions
-                  </th>
-                  <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">
-                  </th>
+                  <!-- <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">Actions
+                  </th> -->
+                  <!-- <th class="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                  </th> -->
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100">
@@ -242,7 +242,7 @@
                       {{ getStatusLabel(command.status) }}
                     </span>
                   </td>
-                  <td class="px-6 py-4">
+                  <!-- <td class="px-6 py-4">
                     <div class="flex items-center justify-center gap-2" v-if="command.status === 'pending'">
                       <button @click="markDone(command.id)"
                         class="inline-flex items-center px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200">
@@ -255,12 +255,12 @@
                         Cancel
                       </button>
                     </div>
-                  </td>
-                  <td class="p-2 text-center space-x-2">
+                  </td> -->
+                  <!-- <td class="p-2 text-center space-x-2">
                     <button @click="confirmDelete(command)" class="text-red-500 ">
                       <Trash2 class="w-4 h-4" />
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -326,9 +326,9 @@
                     <X class="w-4 h-4" />
                   </button>
                 </div>
-                <button @click="confirmDelete(command)" class="text-red-500 ">
+                <!-- <button @click="confirmDelete(command)" class="text-red-500 ">
                   <Trash2 class="w-4 h-4" />
-                </button>
+                </button> -->
               </div>
 
               <!-- Mobile Pack Type Editing -->
@@ -407,7 +407,7 @@
               </div>
 
               <!-- Mobile Actions -->
-              <div v-if="command.status === 'pending'" class="flex gap-3">
+              <!-- <div v-if="command.status === 'pending'" class="flex gap-3">
                 <button @click="markDone(command.id)"
                   class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all duration-200">
                   <Check class="w-4 h-4 mr-2" />
@@ -418,7 +418,7 @@
                   <X class="w-4 h-4 mr-2" />
                   Cancel
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
