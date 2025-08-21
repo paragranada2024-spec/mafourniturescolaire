@@ -3,9 +3,9 @@
     <!-- Header -->
 
 
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+    <div class="">
       <!-- Metrics Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-6 mb-8">
         <div class="bg-white rounded-2xl p-6 border border-slate-200/60 hover:shadow-lg transition-all duration-300">
           <div class="flex items-center justify-between">
             <div>
@@ -28,6 +28,19 @@
             </div>
             <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center">
               <Clock class="w-6 h-6 text-amber-600" />
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-sky-200/60 hover:shadow-lg transition-all duration-300">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-sky-600 uppercase tracking-wide mb-2">Confirmed</p>
+              <p class="text-3xl font-bold text-sky-700">{{ confirmedCount }}</p>
+              <p class="text-xs text-sky-500 mt-1">Awaiting action</p>
+            </div>
+            <div class="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center">
+              <BadgeCheck class="w-6 h-6 text-sky-600" />
             </div>
           </div>
         </div>
@@ -95,7 +108,7 @@
       </div>
 
       <!-- Orders Table/Cards -->
-      <div class="bg-white rounded-2xl border border-slate-200/60 overflow-hidden shadow-sm">
+      <div class=" rounded-2xl   overflow-hidden ">
         <!-- Desktop Table -->
         <div class="hidden lg:block">
           <div class="overflow-x-auto">
@@ -236,12 +249,40 @@
                       </div>
                     </div>
                   </td>
+                  <!-- STATUS (pill -> select on click) -->
                   <td class="px-6 py-4">
+                    <div v-if="editingStatusId !== command.id">
+                      <button @click="startEditingStatus(command)"
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition hover:opacity-90"
+                        :class="getStatusClasses(command.status)">
+                        {{ getStatusLabel(command.status) }}
+                      </button>
+                    </div>
+                    <div v-else class="flex items-center gap-2">
+                      <select v-model="tempStatus" @change.stop="saveStatus(command.id)"
+                        @keyup.enter.stop="saveStatus(command.id)" @keyup.esc.stop="cancelEditingStatus"
+                        class="px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400">
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="done">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                      <!-- <button type="button" @click.stop="saveStatus(command.id)"
+                        class="p-1.5 rounded-lg bg-emerald-50 text-emerald-600 hover:text-emerald-700">
+                        <Check class="w-4 h-4" />
+                      </button> -->
+                      <button type="button" @click.stop="cancelEditingStatus"
+                        class="p-1.5 rounded-lg bg-red-50 text-red-600 hover:text-red-700">
+                        <X class="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                  <!-- <td class="px-6 py-4">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
                       :class="getStatusClasses(command.status)">
                       {{ getStatusLabel(command.status) }}
                     </span>
-                  </td>
+                  </td> -->
                   <!-- <td class="px-6 py-4">
                     <div class="flex items-center justify-center gap-2" v-if="command.status === 'pending'">
                       <button @click="markDone(command.id)"
@@ -268,7 +309,7 @@
         </div>
 
         <!-- Added mobile responsive cards view -->
-        <div class="lg:hidden p-6 space-y-6">
+        <div class="lg:hidden  space-y-6">
           <div v-for="command in filteredCommands" :key="command.id"
             class="bg-slate-50/50 border border-slate-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 relative">
             <div class="flex justify-between items-start mb-6">
@@ -276,11 +317,40 @@
 
                 <div>
                   <h3 class="font-semibold text-slate-800 text-lg">{{ command.name }}</h3>
-                  <span
+                  <!-- <span
                     class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium absolute top-4 right-3"
                     :class="getStatusClasses(command.status)">
                     {{ getStatusLabel(command.status) }}
-                  </span>
+                  </span> -->
+                  <!-- Status pill (click -> select) -->
+                  <div class="absolute top-4 right-3">
+                    <button v-if="editingStatusId !== command.id" @click="startEditingStatus(command)"
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition hover:opacity-90"
+                      :class="getStatusClasses(command.status)">
+                      {{ getStatusLabel(command.status) }}
+                    </button>
+
+                    <div v-else
+                      class="flex items-center gap-2 bg-white/95 border border-slate-200 rounded-xl p-2 shadow-lg">
+                      <select v-model="tempStatus" @change="saveStatus(command.id)"
+                        @keyup.enter="saveStatus(command.id)" @keyup.esc="cancelEditingStatus"
+                        class="px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-400 focus:border-slate-400">
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="done">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                      <button @click="saveStatus(command.id)"
+                        class="p-1.5 rounded-lg bg-emerald-50 text-emerald-600 hover:text-emerald-700">
+                        <Check class="w-4 h-4" />
+                      </button>
+                      <button @click="cancelEditingStatus"
+                        class="p-1.5 rounded-lg bg-red-50 text-red-600 hover:text-red-700">
+                        <X class="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -508,8 +578,15 @@ import {
   Search, Filter, Phone, MapPin, User, Check, X, ExternalLink,
   FileText, ImageIcon, File, Clock, CheckCircle, XCircle, Edit2, DollarSign,
   Package, Star,
-  Trash2
+  Trash2,
+  BadgeCheck
 } from 'lucide-vue-next'
+
+import LayoutAdmin from '@/Layout/LayoutAdmin.vue'
+
+defineOptions({
+  layout: LayoutAdmin
+})
 
 
 const { commandes = [] } = usePage().props
@@ -526,6 +603,8 @@ const tempPrice = ref('')
 const tempNote = ref('')
 const showDelete = ref(false)
 const toDelete = ref(null)
+const editingStatusId = ref(null)
+const tempStatus = ref('')
 
 const lightboxOpen = ref(false)
 const lightboxImages = ref([])
@@ -550,11 +629,6 @@ const filteredCommands = computed(() => {
     return matchesSearch && matchesStatus
   })
 })
-import LayoutAdmin from '@/Layout/LayoutAdmin.vue'
-
-defineOptions({
-  layout: LayoutAdmin
-})
 
 const pendingCount = computed(() =>
   commands.value.filter(cmd => cmd.status === 'pending').length
@@ -562,6 +636,10 @@ const pendingCount = computed(() =>
 
 const completedCount = computed(() =>
   commands.value.filter(cmd => cmd.status === 'done').length
+)
+
+const confirmedCount = computed(() =>
+  commands.value.filter(cmd => cmd.status === 'confirmed').length
 )
 
 async function deleteOrder() {
@@ -739,16 +817,16 @@ const cancelEditingNote = () => {
   tempNote.value = ''
 }
 
-const getStatusClasses = (status) => {
-  switch (status) {
-    case 'done':
-      return 'bg-emerald-100 text-emerald-800'
-    case 'cancelled':
-      return 'bg-red-100 text-red-800'
-    default:
-      return 'bg-amber-100 text-amber-800'
-  }
-}
+// const getStatusClasses = (status) => {
+//   switch (status) {
+//     case 'done':
+//       return 'bg-emerald-100 text-emerald-800'
+//     case 'cancelled':
+//       return 'bg-red-100 text-red-800'
+//     default:
+//       return 'bg-amber-100 text-amber-800'
+//   }
+// }
 
 const getPackLabel = (packType) => {
   if (packType === 'plus') return 'Pack Plus'
@@ -756,12 +834,62 @@ const getPackLabel = (packType) => {
 
 }
 
+// const getStatusLabel = (status) => {
+//   switch (status) {
+//     case 'pending': return 'Pending'
+//     case 'done': return 'Completed'
+//     case 'cancelled': return 'Cancelled'
+//     default: return status
+//   }
+// }
+
+
+/* STATUS helpers + inline edit */
+const getStatusClasses = (status) => {
+  switch (status) {
+    case 'done':
+      return 'bg-emerald-100 text-emerald-800'
+    case 'confirmed':
+      return 'bg-sky-100 text-sky-800'
+    case 'cancelled':
+      return 'bg-red-100 text-red-800'
+    default:
+      return 'bg-amber-100 text-amber-800'
+  }
+}
+
 const getStatusLabel = (status) => {
   switch (status) {
     case 'pending': return 'Pending'
+    case 'confirmed': return 'Confirmed'
     case 'done': return 'Completed'
     case 'cancelled': return 'Cancelled'
     default: return status
   }
 }
+
+const startEditingStatus = (command) => {
+  editingStatusId.value = command.id
+  tempStatus.value = command.status || 'pending'
+}
+
+const saveStatus = async (commandId) => {
+  try {
+    const command = commands.value.find(c => c.id === commandId)
+    if (!command) return
+    command.status = tempStatus.value
+    await axios.post(`/admin/commandes/${commandId}/updateStatus`, { status: tempStatus.value })
+  } catch (e) {
+    console.error('Error updating status:', e)
+  } finally {
+    editingStatusId.value = null
+    tempStatus.value = ''
+  }
+}
+
+const cancelEditingStatus = () => {
+  editingStatusId.value = null
+  tempStatus.value = ''
+}
+
 </script>

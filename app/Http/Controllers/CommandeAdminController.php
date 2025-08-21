@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Commande;
 use App\Models\CommandeItem;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class CommandeAdminController extends Controller
 {
@@ -89,29 +89,41 @@ class CommandeAdminController extends Controller
     }
 
     public function updateNote(Request $request, $id)
-{
-    $request->validate([
-        'note' => 'nullable|string|max:255',
-    ]);
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:255',
+        ]);
 
-    $commande = Commande::findOrFail($id);
-    $commande->note = $request->note;
-    $commande->save();
+        $commande = Commande::findOrFail($id);
+        $commande->note = $request->note;
+        $commande->save();
 
-    return response()->json(['message' => 'Note updated successfully']);
-}
+        return response()->json(['message' => 'Note updated successfully']);
+    }
 
-public function updatePrice(Request $request, $id)
-{
-    $request->validate([
-        'price' => 'required',
-    ]);
+    public function updatePrice(Request $request, $id)
+    {
+        $request->validate([
+            'price' => 'required',
+        ]);
 
-    $commande = Commande::findOrFail($id);
-    $commande->price = $request->price;
-    $commande->save();
+        $commande = Commande::findOrFail($id);
+        $commande->price = $request->price;
+        $commande->save();
 
-    return response()->json(['message' => 'Price updated successfully']);
-}
+        return response()->json(['message' => 'Price updated successfully']);
+    }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:pending,confirmed,done,cancelled',
+        ]);
+
+        $commande = Commande::findOrFail($id);
+        $commande->status = $request->status;
+        $commande->save();
+
+        return response()->json(['message' => 'Status updated successfully']);
+    }
 }

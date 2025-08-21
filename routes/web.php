@@ -42,6 +42,7 @@ Route::middleware(['auth2', 'admin'])->group(function () {
 
         Route::post('/commandes/{id}/updateNote', [CommandeAdminController::class, 'updateNote'])->middleware('admin')->name('commandes.updateNote');
         Route::post('/commandes/{id}/updatePrice', [CommandeAdminController::class, 'updatePrice'])->middleware('admin')->name('commandes.updatePrice');
+        Route::post('/commandes/{id}/updateStatus', [CommandeAdminController::class, 'updateStatus'])->middleware('admin')->name('commandes.updateStatus');
     });
 });
 Route::middleware(['web'])->group(function () {
